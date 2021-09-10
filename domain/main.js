@@ -12,11 +12,9 @@ class Cart {
 }
 
 class Product {
-  id;
   name;
 
-  constructor(id, name) {
-    this.id = id;
+  constructor(name) {
     this.name = name;
   }
 }
