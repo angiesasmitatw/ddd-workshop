@@ -1,37 +1,60 @@
 class Cart {
-  private readonly _products: Product[];
+  private readonly _items: Item[];
 
   constructor() {
-    this._products = [];
+    this._items = [];
   }
-  public get products(): ReadonlyArray<Product> {
-    return this._products;
+  public get items(): ReadonlyArray<Item> {
+    return this._items;
   }
 
-  add(product){
-    const existingProduct = this._products.find(currentProduct => currentProduct.name === product.name);
+  private existingItemIndex(item: Item): number {
+    return this._items.indexOf(item);
+  }
+
+  add(item: Item){
+    const existingItem = this.existingItemIndex(item);
     
-    if(existingProduct !== undefined) {
-      existingProduct.addQuantity(product.quantity);
+    if(existingItem !== -1) {
+      this._items[existingItem].addQuantity(item.quantity);
       return;
     }
 
-    this._products.push(product);
+    this._items.push(item);
+  }
+
+  remove(item: Item) {
+    const indexToBeRemoved = this.existingItemIndex(item);
+    if(indexToBeRemoved !== -1) {
+      this._items.splice(indexToBeRemoved,1);
+    }
   }
 }
 
 
 class Product {
   private readonly _name: string;
-  private _quantity: number;
 
-  constructor(name: string, quantity: number) {
+  constructor(name: string) {
     this._name = name;
-    this._quantity = quantity
   }
 
   public get name(): string {
     return this._name;
+  }
+}
+
+class Item {
+  private readonly _product: Product;
+  private _quantity: number;
+
+  constructor(product: Product, quantity: number) {
+    this._product = product;
+    this._quantity = quantity;
+  }
+
+  public get product(): Product {
+    return this._product;
   }
 
   public get quantity(): number {
@@ -39,17 +62,18 @@ class Product {
   }
 
   public addQuantity(quantity: number) {
-    this._quantity += quantity;
+   this._quantity += quantity; 
   }
 }
 
 
-const ipadPro = new Product("iPad Pro", 1);
-const inkPen = new Product("Hero ink Pen", 1);
-const gmCricketBat = new Product("GM Cricket Bat", 2);
+const ipadPro = new Item(new Product("iPad Pro"), 1);
+const inkPen = new Item(new Product("Hero ink Pen"), 1);
+const gmCricketBat = new Item(new Product("GM Cricket Bat"), 2);
 const cart = new Cart();
 
 cart.add(ipadPro);
 cart.add(inkPen);
 cart.add(gmCricketBat);
-console.log(cart.products);
+
+// console.log(cart.products);
