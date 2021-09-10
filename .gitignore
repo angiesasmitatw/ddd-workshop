@@ -1,3 +1,4 @@
 /node_modules/
-/dist/
+/lib/
+/test.out/
 package-lock.json
