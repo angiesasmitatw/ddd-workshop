@@ -3,9 +3,12 @@ import { Item } from "./item";
 export class Cart {
   private readonly _items: Item[];
   private readonly _recentlyRemoveItems: Item[];
+  private readonly _id: number;
+
   constructor() {
     this._items = [];
     this._recentlyRemoveItems = [];
+    this._id = Math.floor(Math.random() * Math.floor(Math.random() * Date.now()));
   }
   public get items(): ReadonlyArray<Item> {
     return this._items;
