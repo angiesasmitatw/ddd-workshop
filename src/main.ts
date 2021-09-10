@@ -1,4 +1,3 @@
-// ipad 
 class Cart {
   private readonly _products: Product[];
 
@@ -9,27 +8,48 @@ class Cart {
     return this._products;
   }
 
-  addProduct(product){
+  add(product){
+    const existingProduct = this._products.find(currentProduct => currentProduct.name === product.name);
+    
+    if(existingProduct !== undefined) {
+      existingProduct.addQuantity(product.quantity);
+      return;
+    }
+
     this._products.push(product);
   }
 }
 
+
 class Product {
   private readonly _name: string;
-  constructor(name: string) {
+  private _quantity: number;
+
+  constructor(name: string, quantity: number) {
     this._name = name;
+    this._quantity = quantity
   }
 
   public get name(): string {
     return this._name;
   }
+
+  public get quantity(): number {
+    return this._quantity;
+  }
+
+  public addQuantity(quantity: number) {
+    this._quantity += quantity;
+  }
 }
 
 
-const ipadPro = new Product("iPad Pro");
-const inkPen = new Product("Hero ink Pen");
+const ipadPro = new Product("iPad Pro", 1);
+const inkPen = new Product("Hero ink Pen", 1);
+const gmCricketBat = new Product("GM Cricket Bat", 2);
 const cart = new Cart();
 
-cart.addProduct(ipadPro);
-cart.addProduct(inkPen)
+cart.add(ipadPro);
+cart.add(inkPen);
+cart.add(gmCricketBat);
 console.log(cart.products);
