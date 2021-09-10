@@ -1,0 +1,23 @@
+{
+  "name": "ddd-workshop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "tsc --project . && node ./dist/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/angiesasmitatw/ddd-workshop.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/angiesasmitatw/ddd-workshop/issues"
+  },
+  "homepage": "https://github.com/angiesasmitatw/ddd-workshop#readme",
+  "dependencies": {
+    "typescript": "^4.4.2"
+  }
+}
