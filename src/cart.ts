@@ -13,11 +13,11 @@ export class Cart {
     return this._items;
   }
 
-  public add(item: Item){
-    const existingItem = this.existingItemIndex(item);
+  public add(item: Item) {
+    const existingItem = this._existingItemIndex(item);
     DomainEvent.apply("add", item);
 
-    if(existingItem !== -1) {
+    if (existingItem !== -1) {
       this._items[existingItem].addQuantity(item.quantity);
       return;
     }
@@ -26,15 +26,15 @@ export class Cart {
   }
 
   public remove(item: Item) {
-    const indexToBeRemoved = this.existingItemIndex(item);
-    if(indexToBeRemoved !== -1) {
-      this._items.splice(indexToBeRemoved,1);
+    const indexToBeRemoved = this._existingItemIndex(item);
+    if (indexToBeRemoved !== -1) {
+      this._items.splice(indexToBeRemoved, 1);
 
       DomainEvent.apply("remove", item);
     }
   }
 
-  private existingItemIndex(item: Item): number {
+  private _existingItemIndex(item: Item): number {
     return this._items.indexOf(item);
   }
 

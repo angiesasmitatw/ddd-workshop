@@ -18,7 +18,7 @@ export class Item {
   }
 
   public addQuantity(quantity: number) {
-   this._quantity += quantity;
+    this._quantity += quantity;
   }
 }
 
