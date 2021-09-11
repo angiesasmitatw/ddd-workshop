@@ -1,25 +1,21 @@
 import { Item } from "./item";
+import { DomainEvent } from './domainEvent';
 
 export class Cart {
   private readonly _items: Item[];
-  private readonly _recentlyRemoveItems: Item[];
   private readonly _id: number;
 
   constructor() {
     this._items = [];
-    this._recentlyRemoveItems = [];
     this._id = Math.floor(Math.random() * Math.floor(Math.random() * Date.now()));
   }
   public get items(): ReadonlyArray<Item> {
     return this._items;
   }
 
-  public get removedItems(): ReadonlyArray<string> {
-    return this._recentlyRemoveItems.map(item => item.product.name);
-  }
-
   public add(item: Item){
     const existingItem = this.existingItemIndex(item);
+    DomainEvent.apply("add", item);
 
     if(existingItem !== -1) {
       this._items[existingItem].addQuantity(item.quantity);
@@ -33,7 +29,8 @@ export class Cart {
     const indexToBeRemoved = this.existingItemIndex(item);
     if(indexToBeRemoved !== -1) {
       this._items.splice(indexToBeRemoved,1);
-      this._recentlyRemoveItems.push(item);
+
+      DomainEvent.apply("remove", item);
     }
   }
 
